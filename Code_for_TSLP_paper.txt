@@ -183,8 +183,8 @@ clustering <- EarT@active.ident
 cellsIn <- names(clustering[clustering %in% TSLP.clusters])
 cellsOut <- names(clustering[clustering %in% Control.Cd4.clusters])
 fgsea.markers <- FindMarkers(EarT, cellsIn, cellsOut, logfc.threshold=0, min.pct=0, test.use="MAST")
-ranks <- fgsea.markers$avg_logFC
-names(ranks) <- rownames(markers)
+ranks <- fgsea.markers$avg_log2FC
+names(ranks) <- rownames(fgsea.markers)
 immune_mouse_set = msigdbr(species="mouse", category="C7", subcategory="IMMUNESIGDB")
 msigdbr_list = split (x=immune_mouse_set$gene_symbol, f=immune_mouse_set$gs_name)
 fgseaRes <- fgsea(pathways=msigdbr_list, stats=ranks, minSize=10, maxSize=500)
