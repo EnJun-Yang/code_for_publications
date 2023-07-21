@@ -181,7 +181,7 @@ clustering <- EarT@active.ident
 cellsIn <- names(clustering[clustering %in% TSLP.clusters])
 cellsIn <- cellsIn[grep("Control",cellsIn,invert=TRUE)]
 cellsOut <- names(clustering[clustering %in% Control.Cd4.clusters])
-cellsOut <- cellsOut[grep("Control",cellsOut,invert=TRUE)]
+cellsOut <- cellsOut[grep("Control",cellsOut,invert=FALSE)]
 fgsea.markers <- FindMarkers(EarT, cellsIn, cellsOut, logfc.threshold=0, min.pct=0, test.use="MAST")
 ranks <- fgsea.markers$avg_log2FC
 names(ranks) <- rownames(fgsea.markers)
@@ -261,11 +261,17 @@ ggsave(filename="20230617_EarT_gammadeltas.png")
 ### Rerunning GSEA analysis without preselecting for condition cluster comparisons
 library(fgsea)
 library(msigdbr)
-TSLP.clusters <- c(0,3,8,9)
-Control.Cd4.clusters <- c(1,2,13)
+# TSLP.clusters <- c(0,3,8,9)
+# Control.Cd4.clusters <- c(1,2,13)
+T.eff.clusters <- c(0,1,2,3,8,9,13)
+# clustering <- EarT@active.ident
+# cellsIn <- names(clustering[clustering %in% TSLP.clusters])
+# cellsOut <- names(clustering[clustering %in% Control.Cd4.clusters])
 clustering <- EarT@active.ident
-cellsIn <- names(clustering[clustering %in% TSLP.clusters])
-cellsOut <- names(clustering[clustering %in% Control.Cd4.clusters])
+cellsIn <- names(clustering[clustering %in% T.eff.clusters])
+cellsIn <- cellsIn[grep("Control",cellsIn,invert=TRUE)]
+cellsOut <- names(clustering[clustering %in% T.eff.clusters])
+cellsOut <- cellsOut[grep("Control",cellsOut,invert=FALSE)]
 fgsea.markers <- FindMarkers(EarT, cellsIn, cellsOut, logfc.threshold=0, min.pct=0, test.use="MAST")
 ranks <- fgsea.markers$avg_log2FC
 names(ranks) <- row.names(fgsea.markers)
